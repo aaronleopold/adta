@@ -5,23 +5,45 @@ import {
   Variants
 } from 'framer-motion';
 import { Plus } from 'phosphor-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Key, KeyModifier } from '../@types/enums';
 import useKeyboardHandler from '../hooks/useKeyboardHandler';
 import useToggle from '../hooks/useToggle';
+import Button from './ui/Button';
 import Heading from './ui/Heading';
+import Input from './ui/Input';
 
 interface AddTodoModalProps {
-  off(): void;
+  createTodo(text: string): void;
 }
 
-const AddTodoModal: React.FC<AddTodoModalProps> = ({ off }) => {
+const AddTodoModal: React.FC<AddTodoModalProps> = ({ createTodo }) => {
+  const [text, setText] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    createTodo(text);
+  };
+
   return (
     <motion.div
       layoutId="expandable-button"
-      className="z-50 max-w-xs max-h-[45%] mx-auto inline-block bg-white dark:bg-theme-900 rounded-lg overflow-hidden shadow-xl w-full p-6"
+      className="z-50 inline-block max-w-xs max-h-[45%] mx-auto  bg-white dark:bg-trout-900 dark:bg-theme-900 rounded-lg overflow-hidden shadow-xl w-full p-6"
     >
-      <Heading>Create a new Todo:</Heading>
+      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+        <Input
+          label="Enter your task"
+          fullWidth
+          autoFocus={true}
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+
+        <Button fullWidth variant="primary">
+          Create
+        </Button>
+      </form>
     </motion.div>
   );
 };
@@ -48,25 +70,21 @@ interface AddTodoProps {
 
 const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
   const [open, { on, off }] = useToggle(false);
-  const [text, setText] = useState('fff');
 
-  const handleAddTodo = useCallback(() => {
-    console.log(text);
-  }, [text]);
-
-  useEffect(() => {
-    return () => setText('');
-  }, []);
+  const handleAddTodo = (text: string) => {
+    onAddTodo(text);
+    off();
+  };
 
   useKeyboardHandler([
-    { key: Key.Enter, callback: open ? handleAddTodo : undefined },
+    // { key: Key.Enter, callback: open ? handleAddTodo : undefined },
     { key: Key.Escape, callback: off },
     { key: Key.N, modifier: KeyModifier.Meta, callback: on }
   ]);
 
   const containerVariants: Variants = {
     open: {
-      top: '30%'
+      bottom: '50%'
     },
     closed: {
       bottom: '2.5%'
@@ -86,7 +104,11 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
         className="z-50 fixed w-full flex justify-center"
       >
         <AnimateSharedLayout type="crossfade">
-          {open ? <AddTodoModal off={off} /> : <AddTodoButton on={on} />}
+          {open ? (
+            <AddTodoModal createTodo={handleAddTodo} />
+          ) : (
+            <AddTodoButton on={on} />
+          )}
         </AnimateSharedLayout>
       </motion.div>
       <AnimatePresence>

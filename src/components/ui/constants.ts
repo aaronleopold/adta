@@ -97,6 +97,9 @@ export const INPUT_VARIANTS = {
 
     dark:hover:bg-trout-700
 
+    dark:focus:border-trout-700
+
+
     dark:placeholder-gray-300
     dark:text-white
   `

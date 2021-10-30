@@ -11,7 +11,7 @@ use sea_orm::{
 pub async fn get_connection() -> Result<DatabaseConnection, Error> {
   // let path_buf = dirs::home_dir().unwrap().join(".tauri-todo");
 
-  // std::fs::create_dir_all(path_buf.clone())?;
+  std::fs::create_dir_all("/Users/aaronleopold/.adta")?;
 
   let connection = Database::connect("sqlite:/Users/aaronleopold/.adta/adta.db?mode=rwc").await?;
   let create_statement =

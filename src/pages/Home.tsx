@@ -17,6 +17,8 @@ export default function Home() {
       .then(data => data)
       .catch(e => e);
 
+    getTodos();
+
     console.log(res);
   };
 

@@ -1,24 +1,49 @@
 import React from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, Variants } from 'framer-motion';
 import useToggle from '../hooks/useToggle';
 
-const CheckmarkButton = () => {
+interface CheckmarkButtonProps {
+  done: boolean;
+  toggleDone(): void;
+}
+
+const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
+  // done = true,
+  toggleDone
+}) => {
+  const [done, { toggle }] = useToggle(false);
   const duration = 0.4;
 
-  const variants = {
-    clicked: { pathLength: 1 },
-    unclicked: { pathLength: 0 }
+  const checkVariants = {
+    done: { pathLength: 1 },
+    notDone: { pathLength: 0 }
   };
 
-  const [isClicked, { toggle }] = useToggle(false);
+  const bgVariants: Variants = {
+    done: {
+      backgroundColor: 'black'
+    },
+    notDone: {
+      backgroundColor: 'transparent'
+    }
+  };
+
+  const handleClick = () => {
+    toggle();
+    toggleDone();
+  };
 
   const pathLength = useMotionValue(0);
   const opacity = useTransform(pathLength, [0, 0.5], [0, 1]);
 
   return (
-    <span
-      className="cursor-pointer p-0.5 border border-gray-200 rounded-full"
-      onClick={toggle}
+    <motion.span
+      className="cursor-pointer p-0.5 border border-gray-200 rounded-full flex items-center justify-center"
+      onClick={handleClick}
+      initial={false}
+      variants={bgVariants}
+      transition={{ duration: 0.3 }}
+      animate={done ? 'done' : 'notDone'}
     >
       <svg
         className="h-5 w-5"
@@ -33,13 +58,13 @@ const CheckmarkButton = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={false}
-          animate={isClicked ? 'clicked' : 'unclicked'}
-          variants={variants}
+          animate={done ? 'done' : 'notDone'}
+          variants={checkVariants}
           style={{ pathLength, opacity }}
           transition={{ duration }}
         />
       </svg>
-    </span>
+    </motion.span>
   );
 };
 

@@ -5,12 +5,14 @@ import Label from './Label';
 import { SubText } from './Text';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  fullWidth?: boolean;
   label?: string;
   description?: string;
   variant?: keyof typeof INPUT_VARIANTS;
 }
 
 export default function Input({
+  fullWidth,
   variant = 'default',
   label,
   description,
@@ -28,6 +30,7 @@ export default function Input({
         <input
           {...props}
           className={clsx(
+            fullWidth && 'min-w-0 w-full flex-1',
             'px-3 py-1 rounded-md border leading-7 outline-none focus:outline-none transition-colors duration-200',
             inputStyles,
             FOCUS_STYLE,

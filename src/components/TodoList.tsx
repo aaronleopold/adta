@@ -10,7 +10,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
   return (
     <div className="w-full flex flex-col space-y-2 p-4">
       {todos?.map(todo => (
-        <Todo key={todo.id} {...todo} />
+        <Todo onComplete={id => console.log(id)} key={todo.id} {...todo} />
       ))}
     </div>
   );
