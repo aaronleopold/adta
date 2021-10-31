@@ -10,20 +10,17 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.1",
     "@tauri-apps/api": "^1.0.0-beta.8",
+    "clsx": "^1.1.1",
+    "framer-motion": "^4.1.17",
+    "phosphor-react": "^1.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "clsx": "^1.1.1",
-    "framer-motion": "^4.1.17",
-    "history": "^5.0.1",
-    "phosphor-react": "^1.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "typescript": "^4.1.2"
-  },
-  "devDependencies": {
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/typography": "^0.4.1",
     "@tauri-apps/cli": "^1.0.0-beta.10",
@@ -33,7 +30,8 @@
     "tailwind-caret-color": "^1.1.0",
     "tailwindcss": "^2.2.17",
     "tailwindcss-textshadow": "^2.1.3",
-    "vite": "^2.6.11"
+    "vite": "^2.6.11",
+    "typescript": "^4.1.2"
   },
   "eslintConfig": {
     "extends": [

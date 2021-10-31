@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "tauri-todo",
+    "productName": "adta",
     "version": "0.1.0"
   },
   "build": {
@@ -62,7 +62,7 @@
     },
     "windows": [
       {
-        "title": "Todo",
+        "title": "Adta",
         "width": 350,
         "height": 500,
         "resizable": true,

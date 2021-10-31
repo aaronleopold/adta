@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform, Variants } from 'framer-motion';
 import useToggle from '../hooks/useToggle';
+import clsx from 'clsx';
 
 interface CheckmarkButtonProps {
   done: boolean;
@@ -12,7 +13,6 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
   toggleDone
 }) => {
   const [done, { toggle }] = useToggle(false);
-  const duration = 0.4;
 
   const checkVariants = {
     done: { pathLength: 1 },
@@ -21,7 +21,7 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
 
   const bgVariants: Variants = {
     done: {
-      backgroundColor: 'black'
+      backgroundColor: '#0A82FA'
     },
     notDone: {
       backgroundColor: 'transparent'
@@ -37,13 +37,12 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
   const opacity = useTransform(pathLength, [0, 0.5], [0, 1]);
 
   return (
-    <motion.span
-      className="cursor-pointer p-0.5 border border-gray-200 rounded-full flex items-center justify-center"
+    <span
+      className={clsx(
+        done ? 'bg-blue-500' : 'bg-gray-50 dark:bg-transparent',
+        'cursor-pointer p-0.5 border border-gray-200 dark:border-trout-500 rounded-full transition duration-200'
+      )}
       onClick={handleClick}
-      initial={false}
-      variants={bgVariants}
-      transition={{ duration: 0.3 }}
-      animate={done ? 'done' : 'notDone'}
     >
       <svg
         className="h-5 w-5"
@@ -52,8 +51,9 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <motion.path
+          className="text-gray-50"
           d="M20 6L9 17L4 12"
-          stroke="#5184f9"
+          stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -61,10 +61,10 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
           animate={done ? 'done' : 'notDone'}
           variants={checkVariants}
           style={{ pathLength, opacity }}
-          transition={{ duration }}
+          transition={{ duration: 0.35 }}
         />
       </svg>
-    </motion.span>
+    </span>
   );
 };
 
