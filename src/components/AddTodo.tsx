@@ -10,7 +10,6 @@ import { Key, KeyModifier } from '../@types/enums';
 import useKeyboardHandler from '../hooks/useKeyboardHandler';
 import useToggle from '../hooks/useToggle';
 import Button from './ui/Button';
-import Heading from './ui/Heading';
 import Input from './ui/Input';
 
 interface AddTodoModalProps {
@@ -103,7 +102,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
         }}
         className="z-50 fixed w-full flex justify-center"
       >
-        <AnimateSharedLayout type="crossfade">
+        <AnimateSharedLayout>
           {open ? (
             <AddTodoModal createTodo={handleAddTodo} />
           ) : (

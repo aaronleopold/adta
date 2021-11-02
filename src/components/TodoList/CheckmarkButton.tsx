@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, useMotionValue, useTransform, Variants } from 'framer-motion';
-import useToggle from '../hooks/useToggle';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import useToggle from '../../hooks/useToggle';
 import clsx from 'clsx';
 
 interface CheckmarkButtonProps {
@@ -19,15 +19,6 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
     notDone: { pathLength: 0 }
   };
 
-  const bgVariants: Variants = {
-    done: {
-      backgroundColor: '#0A82FA'
-    },
-    notDone: {
-      backgroundColor: 'transparent'
-    }
-  };
-
   const handleClick = () => {
     toggle();
     toggleDone();
@@ -37,10 +28,10 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
   const opacity = useTransform(pathLength, [0, 0.5], [0, 1]);
 
   return (
-    <span
+    <button
       className={clsx(
         done ? 'bg-blue-500' : 'bg-gray-50 dark:bg-transparent',
-        'cursor-pointer p-0.5 border border-gray-200 dark:border-trout-500 rounded-full transition duration-200'
+        'z-10 p-0.5 border border-gray-200 dark:border-trout-500 rounded-full transition duration-200'
       )}
       onClick={handleClick}
     >
@@ -64,7 +55,7 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
           transition={{ duration: 0.35 }}
         />
       </svg>
-    </span>
+    </button>
   );
 };
 

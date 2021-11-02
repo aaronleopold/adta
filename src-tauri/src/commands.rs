@@ -15,7 +15,7 @@ fn get_naive_date() -> NaiveDateTime {
   NaiveDateTime::from_timestamp(timestamp_seconds, timestamp_nano)
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub async fn test_connection(app: tauri::AppHandle) -> Result<(), String> {
   match block_on(super::db::get_connection()) {
     Err(err) => Err(format!("{:?}", err)),
@@ -23,7 +23,7 @@ pub async fn test_connection(app: tauri::AppHandle) -> Result<(), String> {
   }
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub async fn get_todos(app: tauri::AppHandle) -> Result<Vec<todo::Model>, String> {
   let state = app.state::<AppState>();
   let connection = &state.0;
@@ -36,7 +36,7 @@ pub async fn get_todos(app: tauri::AppHandle) -> Result<Vec<todo::Model>, String
 
 // this should return the model, but I can't figure out how to get Model
 // from ActiveModel. So, for now it returns the id
-#[tauri::command]
+#[tauri::command(async)]
 pub async fn insert_todo(app: tauri::AppHandle, text: String) -> Result<i32, String> {
   let date_created = get_naive_date();
 
@@ -58,7 +58,7 @@ pub async fn insert_todo(app: tauri::AppHandle, text: String) -> Result<i32, Str
   }
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub async fn set_todo_status(app: tauri::AppHandle, id: i32, done: bool) -> Result<(), String> {
   let date = get_naive_date();
 

@@ -6,6 +6,7 @@
 mod app;
 mod commands;
 mod db;
+mod utils;
 
 use crate::app::menu;
 use futures::executor::block_on;

@@ -46,9 +46,6 @@ module.exports = {
     extend: {}
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('tailwind-caret-color'),
-    require('tailwindcss-textshadow')
+    // require('@tailwindcss/forms'),
   ]
 };
