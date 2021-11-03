@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import useToggle from '../../hooks/useToggle';
 import clsx from 'clsx';
 
 interface CheckmarkButtonProps {
@@ -9,19 +8,12 @@ interface CheckmarkButtonProps {
 }
 
 const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
-  // done = true,
+  done,
   toggleDone
 }) => {
-  const [done, { toggle }] = useToggle(false);
-
   const checkVariants = {
     done: { pathLength: 1 },
     notDone: { pathLength: 0 }
-  };
-
-  const handleClick = () => {
-    toggle();
-    toggleDone();
   };
 
   const pathLength = useMotionValue(0);
@@ -33,7 +25,7 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
         done ? 'bg-blue-500' : 'bg-gray-50 dark:bg-transparent',
         'z-10 p-0.5 border border-gray-200 dark:border-trout-500 rounded-full transition duration-200'
       )}
-      onClick={handleClick}
+      onClick={toggleDone}
     >
       <svg
         className="h-5 w-5"

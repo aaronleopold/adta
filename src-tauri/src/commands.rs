@@ -1,10 +1,12 @@
 use super::db::entities::todo;
 use super::AppState;
 
+// use anyhow::Error;
 use chrono::{NaiveDateTime, Utc};
 use futures::executor::block_on;
 use sea_orm::entity::prelude::*;
-use sea_orm::{Set, Unset};
+use sea_orm::sea_query::Expr;
+use sea_orm::{Order, QueryOrder, Set, Unset};
 use tauri::Manager;
 
 fn get_naive_date() -> NaiveDateTime {
@@ -28,7 +30,11 @@ pub async fn get_todos(app: tauri::AppHandle) -> Result<Vec<todo::Model>, String
   let state = app.state::<AppState>();
   let connection = &state.0;
 
-  match todo::Entity::find().all(connection).await {
+  match todo::Entity::find()
+    .order_by(todo::Column::Done, Order::Asc)
+    .all(connection)
+    .await
+  {
     Ok(todos) => Ok(todos),
     Err(err) => Err(format!("{:?}", err)),
   }
@@ -58,6 +64,21 @@ pub async fn insert_todo(app: tauri::AppHandle, text: String) -> Result<i32, Str
   }
 }
 
+// doesn't work with anyhow, figure out why
+#[tauri::command(async)]
+pub async fn delete_todo(app: tauri::AppHandle, id: i32) -> Result<(), String> {
+  let state = app.state::<AppState>();
+  let connection = &state.0;
+
+  // DELETE FROM `fruit` WHERE `fruit`.`name` LIKE '%Orange%'
+  let _res = todo::Entity::delete_many()
+    .filter(todo::Column::Id.eq(id))
+    .exec(connection)
+    .await;
+
+  Ok(())
+}
+
 #[tauri::command(async)]
 pub async fn set_todo_status(app: tauri::AppHandle, id: i32, done: bool) -> Result<(), String> {
   let date = get_naive_date();
@@ -81,6 +102,24 @@ pub async fn set_todo_status(app: tauri::AppHandle, id: i32, done: bool) -> Resu
   }
 
   match active_model.update(connection).await {
+    Ok(_val) => Ok(()),
+    Err(err) => Err(format!("{:?}", err)),
+  }
+}
+
+#[tauri::command(async)]
+pub async fn set_todo_text(app: tauri::AppHandle, id: i32, text: String) -> Result<(), String> {
+  let state = app.state::<AppState>();
+  let connection = &state.0;
+
+  // I think SeaORM's api for updating many is just cleaner than fetching by ID and THEN deleting.
+  // So, this is why I am doing it this way
+  match todo::Entity::update_many()
+    .col_expr(todo::Column::Text, Expr::value(text))
+    .filter(todo::Column::Id.eq(id))
+    .exec(connection)
+    .await
+  {
     Ok(_val) => Ok(()),
     Err(err) => Err(format!("{:?}", err)),
   }

@@ -1,5 +1,6 @@
 import { motion, PanInfo, useAnimation } from 'framer-motion';
 import React from 'react';
+
 import { ITodo } from '../../@types';
 import Todo from './Todo';
 

@@ -6,9 +6,11 @@ import {
 } from 'framer-motion';
 import { Plus } from 'phosphor-react';
 import React, { useState } from 'react';
+
 import { Key, KeyModifier } from '../@types/enums';
 import useKeyboardHandler from '../hooks/useKeyboardHandler';
 import useToggle from '../hooks/useToggle';
+import useStore from '../store';
 import Button from './ui/Button';
 import Input from './ui/Input';
 
@@ -63,15 +65,13 @@ const AddTodoButton: React.FC<AddTodoButtonProps> = ({ on }) => {
   );
 };
 
-interface AddTodoProps {
-  onAddTodo(text: string): void;
-}
+const AddTodo: React.FC = () => {
+  const createTodo = useStore(state => state.createTodo);
 
-const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
   const [open, { on, off }] = useToggle(false);
 
   const handleAddTodo = (text: string) => {
-    onAddTodo(text);
+    createTodo(text);
     off();
   };
 

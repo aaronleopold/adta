@@ -19,7 +19,7 @@ const TodoListContainer: React.FC<TodoListContainerProps> = ({
 }) => {
   const y = useMotionValue(0);
 
-  const { top, bottom } = useConstraints(todos, width);
+  const { bottom } = useConstraints(todos, width);
   const controls = useAnimation();
   const totalScroll = getHeight(todos);
   const scrollContainer = height;
@@ -40,7 +40,7 @@ const TodoListContainer: React.FC<TodoListContainerProps> = ({
       style={{ y: y, height: totalScroll }}
       drag="y"
       dragDirectionLock
-      dragConstraints={{ top, bottom }}
+      dragConstraints={{ top: 0, bottom }}
       animate={controls}
     >
       {todos.map((todo, index) => {
@@ -51,7 +51,7 @@ const TodoListContainer: React.FC<TodoListContainerProps> = ({
             width={width}
             height={height}
             todo={todo}
-            onDelete={() => onDelete(index)}
+            onDelete={() => onDelete(todo.id)}
           />
         );
       })}

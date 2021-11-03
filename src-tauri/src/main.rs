@@ -22,7 +22,9 @@ fn main() {
     .invoke_handler(tauri::generate_handler![
       commands::test_connection,
       commands::get_todos,
+      commands::delete_todo,
       commands::set_todo_status,
+      commands::set_todo_text,
       commands::insert_todo,
     ])
     .menu(menu::get_menu())

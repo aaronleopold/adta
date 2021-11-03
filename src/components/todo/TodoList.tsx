@@ -1,36 +1,23 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { ITodo } from '../../@types';
+import useStore from '../../store';
+import shallow from 'zustand/shallow';
 import TodoListContainer from './TodoListContainer';
 
-interface TodoListProps {
-  todos: ITodo[] | undefined;
-}
+const TodoList: React.FC = () => {
+  const { todos, deleteTodo } = useStore(state => state, shallow);
 
-const TodoList: React.FC<TodoListProps> = ({ todos }) => {
-  // FIXME: remove this fake removal and make it real
-  const [todoos, setTodoos] = useState(todos);
+  const handleDeleteTodo = (id: number) => {
+    if (!todos) return;
 
-  const handleDeleteTodo = (index: number) => {
-    if (!todoos) return;
-
-    const newItems = [...todoos];
-    newItems.splice(index, 1);
-
-    setTodoos(newItems);
+    deleteTodo(id);
   };
-
-  useEffect(() => {
-    setTodoos(todos);
-  }, [todos]);
-
-  console.log(todoos);
 
   return (
     <div className="h-full w-full  flex flex-col space-y-2 p-4">
       <AnimatePresence>
-        {todoos && (
+        {todos && (
           <AutoSizer style={{ width: '100%', height: '100%' }}>
             {({ height, width }) => {
               return (
@@ -47,7 +34,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
                   <TodoListContainer
                     height={height}
                     width={width}
-                    todos={todoos}
+                    todos={todos}
                     onDelete={handleDeleteTodo}
                   />
                 </motion.div>
