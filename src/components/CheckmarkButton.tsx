@@ -22,7 +22,7 @@ const CheckmarkButton: React.FC<CheckmarkButtonProps> = ({
   return (
     <button
       className={clsx(
-        done ? 'bg-blue-500' : 'bg-gray-50 dark:bg-transparent',
+        done ? 'bg-blue-500' : 'bg-gray-100 dark:bg-transparent',
         'z-10 p-0.5 border border-gray-200 dark:border-trout-500 rounded-full transition duration-200'
       )}
       onClick={toggleDone}

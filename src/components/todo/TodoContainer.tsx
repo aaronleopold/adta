@@ -48,7 +48,7 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
     >
       <motion.div
         style={{ width }}
-        className="rounded-md bg-gray-100 dark:bg-trout-800 shadow-sm"
+        className="rounded-md bg-gray-200 dark:bg-trout-800 shadow-sm"
         drag={!editing && 'x'}
         dragDirectionLock
         onDragEnd={handleDragEnd}

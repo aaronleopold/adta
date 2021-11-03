@@ -28,7 +28,7 @@ export default function Text({
   return (
     <p
       className={clsx(
-        'dark:text-gray-200',
+        'text-gray-800 dark:text-gray-200',
         centered && 'text-center',
         { italic },
         `text-${size} font-${weight}`,
