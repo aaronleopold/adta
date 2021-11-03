@@ -15,7 +15,7 @@ const TodoList: React.FC = () => {
   };
 
   return (
-    <div className="h-full w-full  flex flex-col space-y-2 p-4">
+    <div className="h-[84%] overflow-y-scroll w-full flex flex-col space-y-2 p-4">
       <AnimatePresence>
         {todos && (
           <AutoSizer style={{ width: '100%', height: '100%' }}>

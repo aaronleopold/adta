@@ -21,23 +21,23 @@ const TodoListContainer: React.FC<TodoListContainerProps> = ({
 
   const { bottom } = useConstraints(todos, width);
   const controls = useAnimation();
-  const totalScroll = getHeight(todos);
-  const scrollContainer = height;
+  // const totalScroll = getHeight(todos);
+  // const scrollContainer = height;
 
-  useEffect(() => {
-    const newScrollHeight = getHeight(todos);
-    const bottomOffset = -y.get() + scrollContainer;
-    const bottomWillBeVisible = newScrollHeight < bottomOffset;
-    const isScrollHeightLarger = newScrollHeight >= scrollContainer;
+  // useEffect(() => {
+  //   const newScrollHeight = getHeight(todos);
+  //   const bottomOffset = -y.get() + scrollContainer;
+  //   const bottomWillBeVisible = newScrollHeight < bottomOffset;
+  //   const isScrollHeightLarger = newScrollHeight >= scrollContainer;
 
-    if (bottomWillBeVisible && isScrollHeightLarger) {
-      controls.start({ y: -newScrollHeight + scrollContainer });
-    }
-  }, [todos]);
+  //   // if (bottomWillBeVisible && isScrollHeightLarger) {
+  //   //   controls.start({ y: -newScrollHeight + scrollContainer });
+  //   // }
+  // }, [todos]);
 
   return (
     <motion.div
-      style={{ y: y, height: totalScroll }}
+      // style={{ y: y, height: totalScroll }}
       drag="y"
       dragDirectionLock
       dragConstraints={{ top: 0, bottom }}

@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="h-[84%] w-full overflow-scroll flex flex-col justify-between items-center">
+    <div className="h-full w-full flex flex-col justify-between items-center">
       <TodoList />
       <AddTodo />
     </div>

@@ -31,7 +31,10 @@ pub async fn get_todos(app: tauri::AppHandle) -> Result<Vec<todo::Model>, String
   let connection = &state.0;
 
   match todo::Entity::find()
+    // I want the see todos that are not completed first
     .order_by(todo::Column::Done, Order::Asc)
+    // I then want to see them in the order they were created
+    .order_by(todo::Column::DateCreated, Order::Asc)
     .all(connection)
     .await
   {

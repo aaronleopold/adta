@@ -2,6 +2,8 @@ pub mod entities;
 
 extern crate dirs;
 
+use std::path::PathBuf;
+
 use super::utils::date;
 use entities::todo;
 
@@ -55,12 +57,22 @@ async fn create_default_todos(connection: &DatabaseConnection) {
     .await;
 }
 
+fn create_adta_folder() -> Result<PathBuf, Error> {
+  let home_dir = dirs::home_dir().ok_or(anyhow::anyhow!("Could not find home directory"))?;
+  let db_dir = home_dir.join(".adta");
+  std::fs::create_dir_all(&db_dir)?;
+  Ok(db_dir)
+}
+
 pub async fn get_connection() -> Result<DatabaseConnection, Error> {
-  // let path_buf = dirs::home_dir().unwrap().join(".tauri-todo");
+  let adta_folder = create_adta_folder()?;
 
-  std::fs::create_dir_all("/Users/aaronleopold/.adta")?;
+  let db = format!(
+    "sqlite:{}?mode=rwc",
+    adta_folder.join("adta.db").to_str().unwrap()
+  );
 
-  let connection = Database::connect("sqlite:/Users/aaronleopold/.adta/adta.db?mode=rwc").await?;
+  let connection = Database::connect(db).await?;
   let create_statement =
     Schema::create_table_from_entity(todo::Entity).to_string(SqliteQueryBuilder);
 

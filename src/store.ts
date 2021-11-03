@@ -46,37 +46,10 @@ const useStore = create<TodoStore>((set, get) => ({
       .catch(err => console.log(err));
   },
 
-  // this is why I got lazy with the rest of these functions...
   setTodoStatus: async (id, done) => {
-    let todos = [...(get().todos ?? [])];
-
-    if (!todos || !todos.length) return;
-
-    let index = -1;
-
-    for (let i = 0; i < todos.length; i++) {
-      if (todos[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    if (index !== -1) {
-      let newArr: ITodo[];
-
-      if (done) {
-        const target = todos.splice(index, 1)[0];
-        newArr = [...todos, { ...target, done }];
-      } else {
-        const target = todos[index];
-        todos.splice(index, 1, { ...target, done });
-        newArr = [...todos];
-      }
-
-      await invoke('set_todo_status', { id, done })
-        .then((_: any) => set({ todos: newArr }))
-        .catch(err => console.log(err));
-    }
+    await invoke('set_todo_status', { id, done })
+      .then((_: any) => get().getTodos())
+      .catch(err => console.log(err));
   },
 
   deleteTodo: async id => {

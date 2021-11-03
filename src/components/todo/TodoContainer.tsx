@@ -1,5 +1,5 @@
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ITodo } from '../../@types';
 import Todo from './Todo';
@@ -15,19 +15,18 @@ interface TodoContainerProps {
 type DragEndEvent = MouseEvent | TouchEvent | PointerEvent;
 
 const TodoContainer: React.FC<TodoContainerProps> = ({
-  height,
   width,
-  index,
   todo,
   onDelete
 }) => {
+  const [editing, setEditing] = useState(false);
   const controls = useAnimation();
 
   async function handleDragEnd(_: DragEndEvent, info: PanInfo) {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
 
-    if (offset < -(width * 0.75) || velocity < -500) {
+    if (offset < -(width * 0.75) || velocity < -400) {
       await controls.start({ x: -width, transition: { duration: 0.2 } });
       onDelete();
     } else {
@@ -39,7 +38,6 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
     <motion.div
       className="rounded-md overflow-hidden mb-[10px]"
       style={{
-        // height: TODO_HEIGHT,
         width,
         willChange: 'transform',
         cursor: 'grab'
@@ -51,12 +49,12 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
       <motion.div
         style={{ width }}
         className="rounded-md bg-gray-100 dark:bg-trout-800 shadow-sm"
-        drag="x"
+        drag={!editing && 'x'}
         dragDirectionLock
         onDragEnd={handleDragEnd}
         animate={controls}
       >
-        <Todo {...todo} />
+        <Todo editing={editing} setEditing={setEditing} {...todo} />
       </motion.div>
     </motion.div>
   );

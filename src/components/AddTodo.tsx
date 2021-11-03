@@ -41,7 +41,7 @@ const AddTodoModal: React.FC<AddTodoModalProps> = ({ createTodo }) => {
           onChange={e => setText(e.target.value)}
         />
 
-        <Button fullWidth variant="primary">
+        <Button type="submit" fullWidth variant="primary">
           Create
         </Button>
       </form>
@@ -70,32 +70,34 @@ const AddTodo: React.FC = () => {
 
   const [open, { on, off }] = useToggle(false);
 
-  const handleAddTodo = (text: string) => {
-    createTodo(text);
+  const handleAddTodo = async (text: string) => {
     off();
+    createTodo(text);
   };
 
   useKeyboardHandler([
-    // { key: Key.Enter, callback: open ? handleAddTodo : undefined },
     { key: Key.Escape, callback: off },
     { key: Key.N, modifier: KeyModifier.Meta, callback: on }
   ]);
 
-  const containerVariants: Variants = {
-    open: {
-      bottom: '50%'
-    },
-    closed: {
-      bottom: '2.5%'
-    }
-  };
+  // FIXME: this caused a visual bug when the modal was opened, then closed,
+  // then toggling a todo item as done (or not done). The modal was not rendered,
+  // however the button would transition to the modal's position (bottom: 50%).
+  // const containerVariants: Variants = {
+  //   open: {
+  //     bottom: '50%'
+  //   },
+  //   closed: {
+  //     bottom: '2.5%'
+  //   }
+  // };
 
   return (
     <div className="w-full">
       <motion.div
         initial={{ bottom: '2.5%' }}
-        animate={open ? 'open' : 'closed'}
-        variants={containerVariants}
+        // animate={open ? 'open' : 'closed'}
+        // variants={containerVariants}
         transition={{
           y: { type: 'keyframes' },
           duration: 0.45
