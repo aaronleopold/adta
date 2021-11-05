@@ -5,7 +5,7 @@ Adta is **A**nother **D**amn **T**odo **A**pp - pronounced _Ay-Duh_, not _Add-Ta
 _what i'm really saying is if you have a better name reach out_ 😆
 
 <h1 align="center">
-  <img alt='Demo' src="https://github.com/aaronleopold/adta/blob/main/misc/demo.gif" />
+  <img style="width:30%;" alt='Demo' src="https://github.com/aaronleopold/adta/blob/main/misc/demo.gif" />
 </h1>
 
 ## Why?
