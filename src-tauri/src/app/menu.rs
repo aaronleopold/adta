@@ -8,7 +8,6 @@ fn custom_menu(name: &str) -> CustomMenuItem {
 pub fn get_menu() -> Menu {
   Menu::new()
     .add_submenu(Submenu::new(
-      // on macOS first menu is always app name
       "Adta",
       Menu::new()
         .add_native_item(MenuItem::About("Adta".to_string()))
@@ -19,15 +18,6 @@ pub fn get_menu() -> Menu {
         .add_native_item(MenuItem::Separator)
         .add_native_item(MenuItem::Quit),
     ))
-    // .add_submenu(Submenu::new(
-    //   "File",
-    //   Menu::new()
-    //     .add_item(custom_menu("Open...").accelerator("cmdOrControl+O"))
-    //     .add_native_item(MenuItem::Separator)
-    //     .add_item(custom_menu("Close").accelerator("cmdOrControl+W"))
-    //     .add_item(custom_menu("Save").accelerator("cmdOrControl+S"))
-    //     .add_item(custom_menu("Save As...").accelerator("shift+cmdOrControl+S")),
-    // ))
     .add_submenu(Submenu::new("Edit", {
       Menu::new()
         .add_native_item(MenuItem::Undo)
@@ -38,10 +28,8 @@ pub fn get_menu() -> Menu {
         .add_native_item(MenuItem::Paste)
         .add_native_item(MenuItem::SelectAll)
         .add_native_item(MenuItem::Separator)
-        .add_item(custom_menu("Toggle Done").accelerator("space"))
-        .add_item(custom_menu("Delete Todo").accelerator("backspace"))
         .add_item(custom_menu("Edit Text").accelerator("enter"))
-        .add_item(custom_menu("Cancel Edit Text").accelerator("escape"))
+        .add_item(custom_menu("Cancel").accelerator("escape"))
         .add_native_item(MenuItem::Separator)
         // I chose to let the frontend handle this, rather than using some listener. I
         // don't know if this is the best decision, however I only implemented this

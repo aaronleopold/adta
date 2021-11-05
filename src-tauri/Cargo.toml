@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "Adta"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A Simple To-do App"
+authors = ["Aaron Leopold"]
 license = ""
 repository = ""
-default-run = "app"
+default-run = "Adta"
 edition = "2018"
 build = "src/build.rs"
 

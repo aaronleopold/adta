@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
 import React, { useState } from 'react';
 
@@ -36,7 +37,10 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
 
   return (
     <motion.div
-      className="rounded-md overflow-hidden mb-[10px]"
+      className={clsx(
+        { 'border border-blue-600': editing },
+        'rounded-md overflow-hidden mb-[10px]'
+      )}
       style={{
         width,
         willChange: 'transform',

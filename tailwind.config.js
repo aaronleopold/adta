@@ -13,19 +13,6 @@ module.exports = {
         'col-resize': 'col-resize'
       },
       colors: {
-        primary: {
-          DEFAULT: '#0A82FA',
-          50: '#CBE4FE',
-          100: '#AFD6FD',
-          200: '#78BAFC',
-          300: '#419EFB',
-          400: '#0A82FA',
-          500: '#0466C8',
-          600: '#0459AF',
-          700: '#034C96',
-          800: '#03407D',
-          900: '#023364'
-        },
         trout: {
           DEFAULT: '#505468',
           50: '#F9FAFB',
