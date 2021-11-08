@@ -49,11 +49,7 @@
       "active": false
     },
     "allowlist": {
-      "all": true,
-      "shell": {
-        "execute": false,
-        "open": false
-      },
+      "all": false,
       "fs": {
         "readBinaryFile": true,
         "readTextFile": false,
